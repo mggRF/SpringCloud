@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.usuarios.pueblo.model.EntradaDTO;
 import com.usuarios.pueblo.model.EntradaRec;
 
-@FeignClient(name="loscines",url="http://localhost:8001")
+//FeignClient(name="loscines",url="http://localhost:8001")
+@FeignClient(name="loscines",url="${loscines.url}")
 public interface EntradaFeignClient {
 
-	@PostMapping("/api/entrada")
+	@PostMapping("/entrada")
 	EntradaRec alta(@RequestBody EntradaDTO c) ;
 
 }

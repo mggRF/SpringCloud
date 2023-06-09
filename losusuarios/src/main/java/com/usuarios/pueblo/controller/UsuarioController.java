@@ -140,11 +140,8 @@ public class UsuarioController {
 		String mensaje = "";
 		if (idCliente != null) {
 			try {
-				System.out.println("idclienteA=" + idCliente);
 				Optional<Usuario> usuarioDB = cDao.leerUno(idCliente);
-System.out.println("idclienteD=" + usuarioDB.get());
 				if (usuarioDB.isPresent()) {
-					System.out.println("habia cosas");
 					Map<String, Object> map = new LinkedHashMap<String, Object>();
 					List<EntradaRec> users = cDao.leerEntradas(idCliente);
 					if (!users.isEmpty()) {
@@ -164,12 +161,14 @@ System.out.println("idclienteD=" + usuarioDB.get());
 		}
 		throw new ControllerException(mensaje);
 	}
-	
+
 	@PostMapping("/anotaentrada")
-	public ResponseEntity<EntradaRec> alta(@RequestBody EntradaDTO c) { 
-		System.out.println(c.toString());
-		EntradaRec nuevaEntrada = cDao.anotaEntrada(c) ;
-		return ResponseEntity.ok(nuevaEntrada);
+	public ResponseEntity<EntradaRec> alta(@RequestBody EntradaDTO c) {
+		if (cDao.leerUno(c.getIdCliente()).isPresent()) {
+			EntradaRec nuevaEntrada = cDao.anotaEntrada(c);
+			return ResponseEntity.ok(nuevaEntrada);
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 }
