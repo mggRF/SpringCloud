@@ -12,19 +12,19 @@ public class EntradaRec {
 	
 	private int ent_cantidad;
 	
-	private String id_cliente;
+	private String idCliente;
 
 	public EntradaRec() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public EntradaRec(LocalDate ent_fecha, CineRec cine, int ent_cantidad, String id_cliente) {
+	public EntradaRec(LocalDate ent_fecha, CineRec cine, int ent_cantidad, String idCliente) {
 		super();
 		this.ent_fecha = ent_fecha;
 		this.cine = cine;
 		this.ent_cantidad = ent_cantidad;
-		this.id_cliente = id_cliente;
+		this.idCliente = idCliente;
 	}
 
 	public long getId_entrada() {
@@ -59,18 +59,18 @@ public class EntradaRec {
 		this.ent_cantidad = ent_cantidad;
 	}
 
-	public String getId_cliente() {
-		return id_cliente;
+	public String getIdCliente() {
+		return idCliente;
 	}
 
-	public void setId_cliente(String id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setIdCliente(String idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	@Override
 	public String toString() {
 		return "EntradaRec [ent_fecha=" + ent_fecha + ", cine=" + cine + ", ent_cantidad=" + ent_cantidad
-				+ ", id_cliente=" + id_cliente + "]";
+				+ ", idCliente=" + idCliente + "]";
 	}
 	
 }

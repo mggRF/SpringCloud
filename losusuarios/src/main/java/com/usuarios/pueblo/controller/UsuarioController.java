@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.usuarios.pueblo.exception.ControllerException;
 import com.usuarios.pueblo.exception.DAOException;
 import com.usuarios.pueblo.exception.DomainException;
+import com.usuarios.pueblo.model.EntradaDTO;
 import com.usuarios.pueblo.model.EntradaRec;
 import com.usuarios.pueblo.model.Usuario;
 import com.usuarios.pueblo.service.UsuarioService;
@@ -162,6 +163,13 @@ System.out.println("idclienteD=" + usuarioDB.get());
 			mensaje = "Formato erroneo";
 		}
 		throw new ControllerException(mensaje);
+	}
+	
+	@PostMapping("/anotaentrada")
+	public ResponseEntity<EntradaRec> alta(@RequestBody EntradaDTO c) { 
+		System.out.println(c.toString());
+		EntradaRec nuevaEntrada = cDao.anotaEntrada(c) ;
+		return ResponseEntity.ok(nuevaEntrada);
 	}
 
 }

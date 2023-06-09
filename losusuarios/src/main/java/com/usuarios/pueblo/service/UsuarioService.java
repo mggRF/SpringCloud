@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.usuarios.pueblo.exception.DAOException;
 import com.usuarios.pueblo.exception.DomainException;
+import com.usuarios.pueblo.feignsclients.EntradaFeignClient;
+import com.usuarios.pueblo.model.EntradaDTO;
 import com.usuarios.pueblo.model.EntradaRec;
 import com.usuarios.pueblo.model.Usuario;
 import com.usuarios.pueblo.repository.IUsuario;
@@ -25,6 +27,9 @@ public class UsuarioService implements IServicio<Usuario, String> {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private EntradaFeignClient entradaFeignClient;
 
 	@Override
 	public boolean insert(Usuario usuario) {
@@ -70,6 +75,11 @@ public class UsuarioService implements IServicio<Usuario, String> {
 	@Override
 	public Optional<Usuario> leerUno(String id_usuario) {
 		return usuarioRepository.findById(id_usuario);
+	}
+	
+	public EntradaRec anotaEntrada(EntradaDTO entradaDTO) {
+		EntradaRec entrada = entradaFeignClient.alta(entradaDTO);
+		return entrada;
 	}
 
 }
