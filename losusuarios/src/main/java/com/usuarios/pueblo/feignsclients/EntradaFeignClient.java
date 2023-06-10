@@ -12,10 +12,10 @@ import com.usuarios.pueblo.model.EntradaDTO;
 import com.usuarios.pueblo.model.EntradaRec;
 
 //FeignClient(name="loscines",url="http://localhost:8001")
-@FeignClient(name="loscines",url="${loscines.url}")
+@FeignClient(name="loscines")
 public interface EntradaFeignClient {
 
-	@PostMapping("/entrada")
+	@PostMapping("/api/entrada")
 	EntradaRec alta(@RequestBody EntradaDTO c) ;
 
 }
