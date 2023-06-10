@@ -31,7 +31,7 @@ import com.usuarios.pueblo.service.interfaces.IServicio;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	@Autowired
