@@ -20,7 +20,8 @@ import com.usuarios.pueblo.service.util.Rutinas;
 
 @Service
 public class UsuarioService implements IServicio<Usuario, String> {
-	final String URL_CINE = "http://localhost:8001/api/entrada/leerporid";
+  //final String URL_CINE = "http://localhost:8001/api/entrada/leerporid";
+	final String URL_CINE = "http://loscines/api/entrada/leerporid";
 	
 	@Autowired
 	private IUsuario usuarioRepository;
