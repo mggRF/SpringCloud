@@ -29,6 +29,8 @@ import com.usuarios.pueblo.model.Usuario;
 import com.usuarios.pueblo.service.UsuarioService;
 import com.usuarios.pueblo.service.interfaces.IServicio;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/usuario")
@@ -134,6 +136,7 @@ public class UsuarioController {
 		throw new DomainException("Mensaje de pruebas");
 	}
 
+	@CircuitBreaker(name = "miInstancia", fallbackMethod = "fallbackleerPorId")
 	@GetMapping("/leerporid/{idCliente}")
 	public ResponseEntity<Map<String, Object>> leerPorId(@PathVariable("idCliente") String idCliente)
 			throws ControllerException {
@@ -162,8 +165,9 @@ public class UsuarioController {
 		throw new ControllerException(mensaje);
 	}
 
+	@CircuitBreaker(name = "miInstancia", fallbackMethod = "fallbackAnotaEntrada")
 	@PostMapping("/anotaentrada")
-	public ResponseEntity<EntradaRec> alta(@RequestBody EntradaDTO c) {
+	public ResponseEntity<EntradaRec> anotaentrada(@RequestBody EntradaDTO c) {
 		if (cDao.leerUno(c.getIdCliente()).isPresent()) {
 			EntradaRec nuevaEntrada = cDao.anotaEntrada(c);
 			return ResponseEntity.ok(nuevaEntrada);
@@ -171,4 +175,16 @@ public class UsuarioController {
 		return ResponseEntity.notFound().build();
 	}
 
+	private ResponseEntity<Map<String, Object>> fallbackleerPorId(@PathVariable("idCliente") String idCliente, RuntimeException e)
+			throws ControllerException {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("status", 0);
+		map.put("data", "No se puede informar de Cines en este momento");
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Object> fallbackAnotaEntrada(@RequestBody EntradaDTO c, RuntimeException e) {
+		e.printStackTrace();
+		return ResponseEntity.ok("No se puede acceder a cnes en este momento");
+	}
 }
